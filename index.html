@@ -26,7 +26,18 @@ Para generar esos patrones regulares haremos uso de **funciones trigonométricas
 
 [[Coordenadas cartesianas]]
 
-[[Coordenadas polares]]</tw-passagedata><tw-passagedata pid="3" name="Coordenadas cartesianas" tags="" position="600,200" size="100,100"># Coordenadas cartesianas
+[[Coordenadas polares]]
+
+&lt;script&gt;
+var cart;
+var polar;
+
+if(cart) cart.remove();
+if(polar) polar.remove();
+
+&lt;/script&gt;</tw-passagedata><tw-passagedata pid="3" name="Coordenadas cartesianas" tags="" position="600,200" size="100,100"># Coordenadas cartesianas
+
+[[El juego]]
 
 &lt;script&gt;
 
@@ -35,110 +46,123 @@ $.getScript(&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js&q
 	console.log(&#39;Coso&#39;);
 });
 
-let xslider;
-let yslider;
+cart = new p5(function(p){
 
-function setup() {
-  createCanvas(400, 400);
-  colorMode(HSB);
-  
-  let dx = createDiv();  
-  createSpan(&#39;x&#39;).parent(dx);
-  xslider = createSlider(-200, 200, 100);
-  xslider.size(300,AUTO);
-  xslider.parent(dx);
-  
-  let dy = createDiv();  
-  createSpan(&#39;y&#39;).parent(dy);
-  yslider = createSlider(-200, 200, 100);
-  yslider.size(300,AUTO);
-  yslider.parent(dy);
-}
+  p.xslider = null;
+  p.yslider = null;
 
-function draw() {
-  background(0);
-  
-  let x = xslider.value();
-  let y = -yslider.value()
-  
-  translate(200,200);
-  
-  stroke(180);
-  strokeWeight(1);
-  line(-200, 0, 200, 0);
-  line(0, 200, 0, -200);
-  
-  line(0, y, x, y);
-  line(x, 0, x, y);
-  
-  stroke(320, 255, 255);
-  strokeWeight(3);
-  line(0, 0, x, y);
-  
-  noStroke();
-  fill(255);
-  text(&#96;(${x},${y})&#96;, x+12, y+12);
-  
-  text(&#39;x&#39;, 190, 12);
-  text(&#39;y&#39;, -12, -190);
-}
+  p.setup = function() {
+	p.createCanvas(400, 400);
+	p.colorMode(p.HSB);
+
+	let dx = p.createDiv();  
+	p.createSpan(&#39;x&#39;).parent(dx);
+	p.xslider = p.createSlider(-200, 200, 100);
+	p.xslider.size(300,p.AUTO);
+	p.xslider.parent(dx);
+
+	let dy = p.createDiv();  
+	p.createSpan(&#39;y&#39;).parent(dy);
+	p.yslider = p.createSlider(-200, 200, 100);
+	p.yslider.size(300,p.AUTO);
+	p.yslider.parent(dy);
+  }
+
+  p.draw = function() {
+	p.background(0);
+
+	let x = p.xslider.value();
+	let y = -p.yslider.value()
+
+	p.translate(200,200);
+
+	p.stroke(180);
+	p.strokeWeight(1);
+	p.line(-200, 0, 200, 0);
+	p.line(0, 200, 0, -200);
+
+	p.line(0, y, x, y);
+	p.line(x, 0, x, y);
+
+	p.stroke(320, 255, 255);
+	p.strokeWeight(3);
+	p.line(0, 0, x, y);
+
+	p.noStroke();
+	p.fill(255);
+	p.text(&#96;(${x},${y})&#96;, x+12, y+12);
+
+	p.text(&#39;x&#39;, 190, 12);
+	p.text(&#39;y&#39;, -12, -190);
+  }
+});
 &lt;/script&gt;</tw-passagedata><tw-passagedata pid="4" name="Coordenadas polares" tags="" position="900,200" size="100,100"># Coordenadas polares
 
+[[El juego]]
+
 &lt;script&gt;
-let aslider;
-let mslider;
 
-function setup() {
-  createCanvas(400, 400);
-  colorMode(HSB);
-  
-  let da = createDiv();  
-  createSpan(&#39;ángulo&#39;).parent(da);
-  aslider = createSlider(-PI, PI, 0, PI/32);
-  aslider.size(300,AUTO);
-  aslider.parent(da);
-  
-  let dm = createDiv();  
-  createSpan(&#39;magnitud&#39;).parent(dm);
-  mslider = createSlider(0, 200, 100);
-  mslider.size(300,AUTO);
-  mslider.parent(dm);
-}
+$.getScript(&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js&quot;,
+	function (data, textStatus, jqxhr) {
+	console.log(&#39;Coso&#39;);
+});
 
-function draw() {
-  background(0);
-  
-  let a = aslider.value();
-  let m = mslider.value()
-  
-  translate(200,200);
-  
-  stroke(180);
-  strokeWeight(1);
-  line(-200, 0, 200, 0);
-  line(0, 200, 0, -200);
-  
-  let v = p5.Vector.fromAngle(a, m);
-  
-  noFill();
-  if (a &gt; 0.01){
-    arc(0, 0, abs(m), abs(m), 0, a);
-  }
-  if (a &lt; -0.01){
-    arc(0, 0, abs(m), abs(m), a, 0);
-  }
-  
-  stroke(320, 255, 255);
-  strokeWeight(3);
-  line(0, 0, v.x, v.y);
-  
-  noStroke();
-  fill(255);
-  text(&#96;(${Math.round(a*100/PI)/100}π,${m})&#96;, v.x+12, v.y+12);
-  
-  text(&#39;x&#39;, 190, 12);
-  text(&#39;y&#39;, -12, -190);
-}
+polar = new p5(function(p){
+	p.aslider = null;
+	p.mslider = null;
+
+	p.setup = function() {
+	  p.createCanvas(400, 400);
+	  p.colorMode(p.HSB);
+
+	  let da = p.createDiv();  
+	  p.createSpan(&#39;ángulo&#39;).parent(da);
+	  p.aslider = p.createSlider(-p.PI, p.PI, 0, p.PI/32);
+	  p.aslider.size(300,p.AUTO);
+	  p.aslider.parent(da);
+
+	  let dm = p.createDiv();  
+	  p.createSpan(&#39;magnitud&#39;).parent(dm);
+	  p.mslider = p.createSlider(0, 200, 100);
+	  p.mslider.size(300,p.AUTO);
+	  p.mslider.parent(dm);
+	}
+
+	p.draw = function() {
+	  p.background(0);
+
+	  let a = p.aslider.value();
+	  let m = p.mslider.value()
+
+	  p.translate(200,200);
+
+	  p.stroke(180);
+	  p.strokeWeight(1);
+	  p.line(-200, 0, 200, 0);
+	  p.line(0, 200, 0, -200);
+
+	  let v = p5.Vector.fromAngle(a, m);
+
+	  p.noFill();
+	  if (a &gt; 0.01){
+		p.arc(0, 0, p.abs(m), p.abs(m), 0, a);
+	  }
+	  if (a &lt; -0.01){
+		p.arc(0, 0, p.abs(m), p.abs(m), a, 0);
+	  }
+
+	  p.stroke(320, 255, 255);
+	  p.strokeWeight(3);
+	  p.line(0, 0, v.x, v.y);
+
+	  p.noStroke();
+	  p.fill(255);
+	  p.text(&#96;(${Math.round(a*100/p.PI)/100}π,${m})&#96;, v.x+12, v.y+12);
+
+	  p.text(&#39;x&#39;, 190, 12);
+	  p.text(&#39;y&#39;, -12, -190);
+	}
+});
 &lt;/script&gt;</tw-passagedata></tw-storydata>
 		<script>
 		(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
